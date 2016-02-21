@@ -1,0 +1,48 @@
+<ng-include src='"static/js/app/views/partials/header-menu.html"'></ng-include>
+<div class="padding-top" style="margin-top: 30px">
+    <!-- MAIN CONTENT -->
+    <div id="content-block padding-top" ng-init="initRouteDetail()">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="padding-10">
+                    <div class="panel panel-success-full">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">{$ route.name $}</h4>
+                        </div>
+                        <div class="panel-body">
+                            <p>{$ route.description $}.</p>
+                            <div class="mb20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-7">
+                    <div id="routeMap"></div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="col-md-12 no-padding" >
+                        <div class="panel panel-inverse">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Place</h4>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="media-list place-list">
+                                    <li class="media" ng-repeat="place in route.places track by $index">
+                                        <div class="media-left">
+                                            <a href="#">
+                                                <img class="media-object img-resposive" src="{$ place.photo $}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#/detail/{$ place.id $}">{$ place.title $}</a></h4>
+                                        </div>
+                                    </li>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

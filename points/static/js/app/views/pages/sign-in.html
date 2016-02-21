@@ -1,0 +1,35 @@
+<div class="signwrapper">
+    <div class="sign-overlay"></div>
+    <div class="signpanel"></div>
+    <div class="panel signin">
+        <div class="panel-heading">
+            <h1>Points</h1>
+            <h4 class="panel-title">Welcome! Please signin.</h4>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-primary btn-quirk btn-fb btn-block">Connect with Facebook</button>
+            <div class="or">or</div>
+            <div class="form-group mb10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input class="form-control" type="text" ng-model="credentials.username" placeholder="Enter Username">
+                </div>
+            </div>
+            <div class="form-group nomargin">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" type="password" ng-model="credentials.password" placeholder="Enter Password">
+                </div>
+            </div>
+            <div><a href="" class="forgot">Forgot password?</a></div>
+            <div class="form-group">
+                <button class="btn btn-success btn-quirk btn-block" ng-click="sign_in(credentials)">Sign In</button>
+            </div>
+            <hr class="invisible">
+            <div class="form-group">
+                <a href="#/register" class="btn btn-default btn-quirk btn-stroke btn-stroke-thin btn-block btn-sign">Not a member? Sign up now!</a>
+            </div>
+        </div>
+    </div>
+    <!-- panel -->
+</div>

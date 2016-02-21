@@ -1,0 +1,80 @@
+<div class="padding-top">
+    <ng-include src='"static/js/app/views/partials/header-menu.html"'></ng-include>
+    <div class="contentpanel" ng-init="initProfile()">
+        <div class="row profile-wrapper">
+            <div class="col-xs-12 col-md-3 col-lg-2 profile-left">
+                <div class="profile-left-heading">
+                    <ul class="panel-options">
+                        <li><a><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+                    </ul>
+                    <a href="" class="profile-photo"><img class="img-circle img-responsive" src="http://wedesignthemes.com/html/role/images/post-images/profile-img4.jpg" alt=""></a>
+                    <h2 class="profile-name">{$user.username$}</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">Posts <a href="timeline.html">1,333</a></li>
+                        <li class="list-group-item">Following <a href="people-directory.html">541</a></li>
+                        <li class="list-group-item">Followers <a href="people-directory-grid.html">32,434</a></li>
+                    </ul>
+                </div>
+                <div class="profile-left-body">
+                    <h4 class="panel-title">About Me</h4>
+                    <p>Social media ninja. Pop culture enthusiast. Zombie fanatic. General tv evangelist.</p>
+                    <p>Alcohol fanatic. Explorer. Passionate reader. Entrepreneur. Lifelong coffee advocate. Avid bacon aficionado. Travel evangelist.</p>
+                    <hr class="fadeout">
+                    <h4 class="panel-title">Location</h4>
+                    <p><i class="glyphicon glyphicon-map-marker mr5"></i> San Francisco, CA, USA</p>
+                    <hr class="fadeout">
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-12 profile-right">
+                <div class="profile-right-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-justified nav-line">
+                        <li class="active"><a href="#places" data-toggle="tab"><strong>Places ({$ userPlaces.length $})</strong></a></li>
+                        <li><a href="#route" data-toggle="tab"><strong>Route</strong></a></li>
+                        <li><a href="#collections" data-toggle="tab"><strong>Collections (10)</strong></a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content container-fluid">
+                        <div class="tab-pane active" id="places">
+                            <a class="BoardCreateRep " href="#/add-place">
+                                <i></i>
+                                <span>Add place</span>
+                            </a>
+                            <div ng-repeat="place in userPlaces track by $index">
+                                <div class="col-md-4 col-xs-6 col-sm-5">
+                                    <ul class="panel-options top-0">
+                                        <li><a><i class="fa fa-refresh"></i></a></li>
+                                        <li><a href="javascript:;" ng-click="remove(place.id)"><span class="fa fa-remove"></span></a></li>
+                                    </ul>
+                                    <div class="padding-top-20">
+                                        <place-post place="place">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="route">
+                            <div class="form-group">
+                                <a href="#/add-route/" class="btn btn-success btn-quirk btn-stroke btn-block">Create route</a>
+                            </div>
+                            <div ng-repeat="route in routeList track by $index">
+                                <div class="col-xs-12">
+                                    <ul class="panel-options">
+                                        <li><a><i class="fa fa-refresh"></i></a></li>
+                                        <li><a><i class="fa fa-remove"></i></a></li>
+                                    </ul>
+                                    <route-miniature route="route"></route-miniature>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- tab-pane -->
+                        <div class="tab-pane" id="collections">
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+    <!-- contentpanel -->
+</div>

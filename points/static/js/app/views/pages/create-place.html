@@ -1,0 +1,66 @@
+<div class="padding-top">
+    <ng-include src='"static/js/app/views/partials/header-menu.html"'></ng-include>
+    <div ng-init="initPlaceForm()" class="padding-top container">
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title">Create place</h4>
+                <p>There you can create new place.</p>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form name="pointForm">
+                        <div class="col-md-6">
+                            <div class="form-group" show-errors>
+                                <input type="text" name="title" placeholder="Enter title" class="form-control" ng-model="point.title" required/>
+                            </div>
+                            <div class="form-group" show-errors>
+                                <select id="select5" class="form-control" style="width: 100%" name="category" data-placeholder="Choose Category..." ng-model="point.category" ng-options="c.pk as c.name for c in categories" required>
+                                </select>
+                            </div>
+                            <div class="form-group" show-errors>
+                                <input name="photo" type="file" multiple id="photo" required/>
+                            </div>
+                            <div class="form-group" show-errors>
+                                <textarea class="form-control" name="description" rows="7" placeholder="Enter description" ng-model="point.description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select id="select-point-country" class="form-control" style="width: 100%" data-placeholder="Choose Country..." ng-model="point.country" ng-options="c.id as c.name for c in countries">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter City" class="form-control" ng-model="point.city" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter Address" class="form-control" ng-model="point.address" />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="point.latitude" placeholder="Latitude" class="form-control" ng-model="point.latitude" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" >
+                                        <input type="text" placeholder="Longtitude" class="form-control" ng-model="point.langtitude"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-xs-12">
+                        <div class="col-xs-offset-4 col-xs-2">
+                            <a href="#/profile" class="btn btn-primary btn-block">Cancel</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-primary btn-block" ng-click="save(point)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

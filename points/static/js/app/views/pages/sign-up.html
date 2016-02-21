@@ -1,0 +1,77 @@
+<!-- <div id="content-block">
+    <div class="row" style="padding: 60px">
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="s_input form-group">
+                <input class="form-input" type="text" placeholder="username">
+            </div>
+            <div class="s_input form-group">
+                <input class="form-input" type="text" placeholder="first name">
+            </div>
+            <div class="s_input form-group">
+                <input class="form-input" type="text" placeholder="last name">
+            </div>
+            <div class="s_input form-group">
+                <input class="form-input" type="text" placeholder="password">
+            </div>
+            <div class="form-group">
+                <a class="btn full color-1 size-1 hover-1 add_section" type="button" ng-click="sign_up(user)">Register</a>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="signwrapper" ng-init="initSignUp()">
+    <div class="sign-overlay"></div>
+    <div class="signpanel"></div>
+    <div class="signup">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h1>Points</h1>
+                        <h4 class="panel-title">Create an Account!</h4>
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary btn-quirk btn-fb btn-block">Sign Up Using Facebook</button>
+                        <div class="or">or</div>
+                        <div class="row">
+                            <div>
+                                <div class="form-group mb15">
+                                    <input type="text" class="form-control" placeholder="Enter Your Email" ng-model="user.username">
+                                </div>
+                                <div class="form-group mb15">
+                                    <input type="text" class="form-control" placeholder="Enter Your First Name" ng-model="user.first_name">
+                                </div>
+                                <div class="form-group mb15">
+                                    <input type="text" class="form-control" placeholder="Enter Your Last Name" ng-model="user.last_name">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group mb15">
+                                    <input type="text" class="form-control" placeholder="Enter Your Password" ng-model="user.password">
+                                </div>
+                                <div class="form-group mb15">
+                                    <input type="text" class="form-control" placeholder="Confirm Password" ng-model="user.password">
+                                </div>
+                                <div class="form-group mb20">
+                                    <label class="ckbox">
+                                        <input type="checkbox" name="checkbox">
+                                        <span style="color:grey">Accept terms and conditions</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <a href="" class="btn btn-success btn-quirk btn-block" ng-click="signUp(user)">Sign up</a>
+                            </div>
+                        </div>
+                        <a href="#/login" class="btn btn-default btn-quirk btn-stroke btn-stroke-thin btn-block btn-sign">Already a member? Sign In Now!</a>
+                    </div>
+                    <!-- col-md-6 -->
+                </div>
+                <!-- panel-body -->
+            </div>
+            <!-- panel -->
+        </div>
+    </div>
+    <!-- col-sm-5 -->
+</div>
+</div>
