@@ -2,46 +2,48 @@
 <div class="padding-top" style="margin-top: 30px">
     <!-- MAIN CONTENT -->
     <div id="content-block padding-top" ng-init="initRouteDetail()">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="padding-10">
-                    <div class="panel panel-success-full">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">{$ route.name $}</h4>
-                        </div>
-                        <div class="panel-body">
-                            <p>{$ route.description $}.</p>
-                            <div class="mb20"></div>
+                <div class="col-xs-12">
+                    <div class="panel panel-map-sidebar">
+                        <div class="row">
+                            <div class="col-md-7 main">
+                                <div id="routeMap" class="map-wrapper"></div>
+                            </div>
+                            <div class="col-md-5 map-sidebar">
+                                <div class="panel-body">
+                                    <h4 class="panel-title mb20">{$ route.name $}</h4>
+                                    <p>{$ route.description $}</p>
+                                    <form class="form" action="#">
+                                        <div class="form-group">
+                                            <label class="control-label">From:</label>
+                                            <select id="selectFrom" class="form-control" data-placeholder="Choose place..."  ng-model="selectFrom" ng-options="c as c.title for c in route.places">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">To:</label>
+                                            <select id="selectTo" class="form-control" data-placeholder="Choose place..." ng-model="selectTo" ng-options="c as c.title for c in route.places">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Transportation:</label>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-bicycle"></i></button>
+                                                <button class="btn btn-default active" type="button"><i class="fa fa-train"></i></button>
+                                                <button class="btn btn-default" type="button"><i class="fa fa-bus"></i></button>
+                                                <button class="btn btn-default" type="button"><i class="fa fa-ship"></i></button>
+                                                <button class="btn btn-default" type="button"><i class="fa fa-plane"></i></button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <button type="button" class="btn btn-success btn-block" ng-click="calcRoute()">Get Directions</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-7">
-                    <div id="routeMap"></div>
-                </div>
-                <div class="col-xs-5">
-                    <div class="col-md-12 no-padding" >
-                        <div class="panel panel-inverse">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">Place</h4>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="media-list place-list">
-                                    <li class="media" ng-repeat="place in route.places track by $index">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object img-resposive" src="{$ place.photo $}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><a href="#/detail/{$ place.id $}">{$ place.title $}</a></h4>
-                                        </div>
-                                    </li>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

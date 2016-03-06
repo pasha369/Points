@@ -43,9 +43,52 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
     };
 
     $scope.currentPlace = {};
-    //init();
     $scope.countries = [];
     $scope.country = {};
+
+    $scope.currentPage = 0;
+    $scope.numPerPage = 6;
+    $scope.page = [];
+    $scope.maxSize = 3;
+    $scope.firstItemId = 1;
+    $scope.lastItemId = 6;
+    $scope.nextPage = function() {
+        if ($scope.currentPage + 1 < ($scope.maxSize % $scope.numPerPage) && $scope.lastItemId < $scope.maxSize) {
+            $scope.currentPage++;
+            $scope.firstItemId = ($scope.currentPage * $scope.numPerPage) + 1;
+            $scope.lastItemId = (($scope.currentPage + 1) * $scope.numPerPage);
+            $scope.page = $scope.places.slice($scope.firstItemId - 1,
+                $scope.lastItemId - 1);
+        } else if ($scope.lastItemId < $scope.maxSize) {
+            $scope.currentPage++;
+            $scope.firstItemId = ($scope.currentPage * $scope.numPerPage);
+            $scope.lastItemId = $scope.maxSize;
+            $scope.page = $scope.places.slice($scope.firstItemId,
+                $scope.lastItemId);
+        }
+    }
+
+    $scope.prevPage = function() {
+        if ($scope.currentPage - 1 >= 0) {
+            $scope.currentPage--;
+            $scope.firstItemId = ($scope.currentPage * $scope.numPerPage) + 1;
+            $scope.lastItemId = (($scope.currentPage + 1) * $scope.numPerPage);
+            $scope.page = $scope.places.slice($scope.firstItemId - 1,
+                $scope.lastItemId - 1);
+        }
+    }
+
+    function getPage() {
+        $scope.page = $scope.places.slice($scope.currentPage * $scope.numPerPage,
+            ($scope.currentPage + 1) * $scope.numPerPage);
+        $scope.maxSize = $scope.places.length;
+        $scope.firstItemId = ($scope.currentPage * $scope.numPerPage) + 1;
+        $scope.lastItemId = (($scope.currentPage + 1) * $scope.numPerPage);
+        if ($scope.lastItemId > $scope.maxSize) {
+            $scope.lastItemId = $scope.maxSize;
+        }
+    }
+
     $scope.initGrid = function() {
         $("#select-rate").select2({ minimumResultsForSearch: Infinity });
         pointService.countryList().then(function(response) {
@@ -59,6 +102,7 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
 
         pointService.placeList().then(function(responce) {
             $scope.places = responce.data['places'];
+            getPage();
         })
     }
 
@@ -130,7 +174,26 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
 
     $scope.initPlaceDetail = function() {
         pointService.placeDetail($scope.placeId).then(function(response) {
-            $scope.currentPlace = response.data
+            $scope.currentPlace = response.data;
+
+            var defaultCoord = {
+                lat: $scope.currentPlace.latitude,
+                lng: $scope.currentPlace.langtitude
+            };
+
+            var map = new google.maps.Map(document.getElementById('placeMap'), {
+                center: defaultCoord,
+                scrollwheel: false,
+                zoom: 8
+            });
+
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: $scope.currentPlace.latitude,
+                    lng: $scope.currentPlace.langtitude
+                },
+                map: map
+            });
         });
     }
 
@@ -141,6 +204,7 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
     $scope.getPlaceByCategory = function(categoryId) {
         pointService.categoryPlaces(categoryId).then(function(responce) {
             $scope.places = responce.data['places'];
+            getPage();
         });
     }
 
@@ -167,6 +231,8 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
         if (text) {
             pointService.search(text).then(function(responce) {
                 $scope.places = responce.data['places'];
+
+                getPage();
             });
         } else {
             $scope.getPlacePage()
@@ -225,6 +291,7 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
     $scope.getPlaces = function() {
         pointService.placeList().then(function(responce) {
             $scope.places = responce.data['places'];
+            getPage();
         })
     }
 })
@@ -232,7 +299,7 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
 app.controller('authController', function($scope, authService) {
     $scope.credentials = {};
     $scope.user = {};
-
+    $scope.editableUser = {};
     $scope.initSignUp = function() {}
 
     $scope.signUp = function(user) {
@@ -242,13 +309,52 @@ app.controller('authController', function($scope, authService) {
     $scope.sign_in = function(credentials) {
         authService.login(credentials);
     }
+
+    $scope.editProfile = function(editableUser) {
+        authService.edit(editableUser);
+    }
+
+    $scope.intiEdit = function() {
+        authService.getUser().then(function() {
+            $scope.user = authService.user;
+            if ($scope.user.id == null) {
+                $location.path('login');
+            }
+        });
+    }
 });
 
 app.controller('routeCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll) {
 
+    var map;
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
     $scope.route = { name: '', selectedPlaces: [] };
     $scope.routes = [];
     $scope.places = [];
+    $scope.selectFrom = {};
+    $scope.selectTo = {};
+
+    $scope.calcRoute = function() {
+        directionsDisplay.setMap(map);
+        directionsDisplay.setOptions({ suppressMarkers: true });
+        var lat = $scope.selectFrom.latitude;
+        var lng = $scope.selectFrom.langtitude;
+
+        var lat2 = $scope.selectTo.latitude;
+        var lng2 = $scope.selectTo.langtitude;
+
+        var request = {
+            origin: { lat: lat, lng: lng },
+            destination: { lat: lat2, lng: lng2 },
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(result);
+            }
+        });
+    }
 
     function initMap() {
         var defaultCoord = {
@@ -256,7 +362,7 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
             lng: $scope.route.places[0].langtitude
         };
 
-        var map = new google.maps.Map(document.getElementById('routeMap'), {
+        map = new google.maps.Map(document.getElementById('routeMap'), {
             center: defaultCoord,
             scrollwheel: false,
             zoom: 8
@@ -274,9 +380,9 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
             });
             var content = '<div id="iw-container">' +
                 '<div class="iw-title">' + place.title + '</div>' +
-                '<div class="iw-content">' +
-                '<img src="' + place.photo + '" height="115" width="83">' +
-                '<p>' + place.description + '</p>' +
+                '<div class="row">' +
+                '<img src="' + place.photo + '" class="img-responsive col-xs-5">' +
+                '<p class="col-xs-7">' + place.description + '</p>' +
                 '</div>' +
                 '<div class="iw-bottom-gradient"></div>' +
                 '</div>';
@@ -350,7 +456,8 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
             $scope.route = response.data['route'];
             initMap();
         });
-
+        $('#selectFrom').select2();
+        $('#selectTo').select2();
     }
 
     $scope.saveRoute = function(route) {

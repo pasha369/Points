@@ -173,6 +173,10 @@ app.factory('authService', function($http, $location) {
             })
         },
 
+        edit: function(editableUser){
+            return $http.post('api/login/edit', {user_data: editableUser});
+        },
+
         isAuthenticated: function(){
             // TODO: if not redirect to login
         }

@@ -24,6 +24,9 @@ class JSONResponse(HttpResponse):
 
 @api_view(['POST'])
 def sign_in(request):
+    """
+    Sign in by credentials.
+    """
     username = request.data['username']
     password = request.data['password']
     user = authenticate(username=username, password=password)
@@ -50,6 +53,9 @@ def user_logout(request):
 
 @api_view(['POST'])
 def register(request):
+    """
+    Register new user.
+    """
     data = request.data['user'].copy()
     user = User.objects.create_user(data['username'], data['username'], data['password'])
     user.save()
@@ -67,21 +73,30 @@ def register(request):
 @api_view(['POST'])
 def get_user(request):
     """
-    Get user data
+    Get user data.
     """
     user = get_user_data(request.user)
     return JSONResponse({'user': user}, status=201)
 
 @api_view(['POST'])
 def edit(request):
-    # TODO: implement save updated data.
-    pass
+    """
+    Edit user profile.
+    """
+    user_data = request.data['user_data']
+    user = BaseUser.objects.get(user = request.user.id)
+    user.first_name = user_data['first_name']
+    user.last_name = user_data['last_name']
+    user.address = user_data['address']
+    user.about = user_data['about']
+    user.save()
+    return JSONResponse({}, status=201)
 
 @api_view(['POST'])
 @csrf_exempt
 def follow(request):
     """
-    Follow by user
+    Follow by user.
     """
     user_id = request.data['person']
     follower = BaseUser.objects.get(user=request.user.id)
@@ -91,4 +106,10 @@ def follow(request):
     return JSONResponse({}, status=201)
 
 def get_user_data(user):
-    return {'id':user.id, 'username': user.username}
+    user_data = BaseUser.objects.get(user = user.id)
+    return {'id':user.id, 
+            'username': user.username,
+            'first_name': user_data.first_name,
+            'last_name': user_data.last_name,
+            'about': user_data.about,
+            'address': user_data.address}

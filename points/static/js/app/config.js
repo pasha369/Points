@@ -23,10 +23,10 @@ app.config(['$routeProvider',
         }).
         when('/profile/edit', {
             templateUrl: 'static/js/app/views/pages/profile-edit.html',
-            controller: 'pointCtrl'
+            controller: 'authController'
         }).
         when('/detail/:placeId', {
-            templateUrl: 'static/js/app/views/pages/place-detail.html',
+            templateUrl: 'static/js/app/views/pages/place-detail2.html',
             controller: 'pointCtrl'
         }).
         when('/add-place/', {
