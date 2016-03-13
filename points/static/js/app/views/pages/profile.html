@@ -31,7 +31,6 @@
                     <ul class="nav nav-tabs nav-justified nav-line">
                         <li class="active"><a href="#places" data-toggle="tab"><strong>Places ({$ userPlaces.length $})</strong></a></li>
                         <li><a href="#route" data-toggle="tab"><strong>Route</strong></a></li>
-                       
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content container-fluid">
@@ -42,13 +41,7 @@
                             </a>
                             <div ng-repeat="place in userPlaces track by $index">
                                 <div class="col-md-4 col-xs-6 col-sm-5">
-                                    <ul class="panel-options top-0">
-                                        <li><a><i class="fa fa-refresh"></i></a></li>
-                                        <li><a href="javascript:;" ng-click="remove(place.id)"><span class="fa fa-remove"></span></a></li>
-                                    </ul>
-                                    <div class="padding-top-20">
-                                        <place-post place="place">
-                                    </div>
+                                    <place-post place="place">
                                 </div>
                             </div>
                         </div>
@@ -58,13 +51,11 @@
                             </div>
                             <div ng-repeat="route in routeList track by $index">
                                 <div class="col-xs-offset-1">
-                                    
                                     <route-miniature route="route"></route-miniature>
                                 </div>
                             </div>
                         </div>
                         <!-- tab-pane -->
-                       
                     </div>
                 </div>
             </div>

@@ -26,6 +26,7 @@ app.controller('mainCtrl', function($scope, $location, authService) {
 });
 
 app.controller('pointCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll) {
+    $scope.isMain = true;
     $scope.places = [];
     $scope.routeList = [];
     $scope.categories = [];
@@ -169,7 +170,7 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
 
         routeService.routeList().then(function(response) {
             $scope.routeList = response.data['routes']
-        })
+        });
     }
 
     $scope.initPlaceDetail = function() {
@@ -276,7 +277,14 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
     }
 
     $scope.remove = function(placeId) {
-        pointService.removePlace(placeId);
+        pointService.removePlace(placeId).then(function(response) {
+            $.each($scope.userPlaces, function(index, item) {
+                if (item.id == placeId) {
+                    $scope.userPlaces.splice(index, 1);
+                    toastr.success(item.title + ' was removed');
+                }
+            });
+        });
     }
 
     $scope.range = function(n) {
@@ -293,6 +301,17 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
             $scope.places = responce.data['places'];
             getPage();
         })
+    }
+
+    $scope.removeRoute = function(route) {
+        routeService.removeRoute(route).then(function(response) {
+            $.each($scope.routeList, function(index, item) {
+                if (item.id == route) {
+                    $scope.routeList.splice(index, 1);
+                    toastr.success(item.name + ' was removed');
+                }
+            });
+        });
     }
 })
 
@@ -324,7 +343,67 @@ app.controller('authController', function($scope, authService) {
     }
 });
 
-app.controller('routeCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll) {
+app.controller('dateModalCtrl', function($scope, $uibModal, $uibModalInstance) {
+
+    $scope.inlineOptions = {
+        customClass: getDayClass,
+        minDate: new Date(),
+        showWeeks: true
+    };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 1
+    };
+
+    $scope.events = [];
+    $scope.openTo = function() {
+        $scope.popupTo.opened = true;
+    };
+
+    $scope.openFrom = function() {
+        $scope.popupFrom.opened = true;
+    };
+
+    function getDayClass(data) {
+        var date = data.date,
+            mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);
+
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+        return '';
+    }
+
+    $scope.toggleMin = function() {
+        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.popupFrom = {
+        opened: false
+    };
+
+    $scope.popupTo = {
+        opened: false
+    };
+
+    $scope.go = function() {
+        $uibModalInstance.close({To: $scope.dtTo, From: $scope.dtFrom});
+    };
+
+})
+
+app.controller('routeCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll, $uibModal) {
 
     var map;
     var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -334,6 +413,39 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
     $scope.places = [];
     $scope.selectFrom = {};
     $scope.selectTo = {};
+
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.maxSize = 5;
+
+
+
+
+    // TODO: Pretiffy this
+    $scope.initRouteList = function() {
+        routeService.routeList().then(function(response) {
+            $scope.routes = response.data['routes']
+            $scope.totalItems = $scope.routes.length;
+            $scope.routeList = $scope.routes.slice(0, ($scope.currentPage) * 5);
+        });
+    }
+
+    $scope.open = function() {
+
+        var modalDateInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'static/js/app/views/templates/tripDateModal.html',
+            controller: 'dateModalCtrl',
+        });
+
+        modalDateInstance.result.then(function(date) {
+            console.log(date);
+        });
+    };
+
+    $scope.pageChanged = function() {
+        $scope.routeList = $scope.routes.slice(($scope.currentPage - 1) * 5, $scope.currentPage * 5);
+    };
 
     $scope.calcRoute = function() {
         directionsDisplay.setMap(map);
@@ -462,6 +574,10 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
 
     $scope.saveRoute = function(route) {
         routeService.saveRoute(route);
+    }
+
+    $scope.removeRoute = function(route) {
+        routeService.removeRoute(route);
     }
 
     $scope.selectPlace = function(place) {

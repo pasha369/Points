@@ -1,0 +1,39 @@
+<div class="padding-top" ng-init="initRouteList()">
+    <ng-include src='"static/js/app/views/partials/header-menu.html"'></ng-include>
+    <div class="padding-top-10 container-fluid">
+        <div class="row padding-top-10">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 padding-10">
+                                <!-- SEARCH -->
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="search(searchText)"><i class="fa fa-search"></i></button>
+                                 </span>
+                                </div>
+                                <!-- END SEARCH -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div class="row">
+                                      <!--  TODO: table -->
+                                    </div>
+                                    <div class="row">
+                                        <uib-pager total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pager>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

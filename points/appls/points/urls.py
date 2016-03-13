@@ -38,6 +38,8 @@ urlpatterns = [
         app_path+'route.get_route_detail', name='get_route_detail'),
     url(r'^route-list/$', 
         app_path+'route.get_route_list', name='get_route_list'),   
+    url(r'^remove-route/$', 
+        app_path+'route.remove_route', name='remove_route'),   
     url(r'^save-route/$', 
         app_path+'route.save_route', name='save_route'),         
 ]

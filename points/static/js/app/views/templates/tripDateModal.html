@@ -1,0 +1,28 @@
+<div class="modal-header padding-top margin-10">
+    <h4 class="modal-title">Trip date</h3>
+    <p>Enter <code>date</code> when you planning trip.</p>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dtFrom" is-open="popupFrom.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openFrom()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dtTo" is-open="popupTo.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openTo()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success btn-quirk col-xs-4 col-xs-offset-4" type="button" ng-click="go()">Go</button>
+</div>

@@ -1,0 +1,84 @@
+<div class="padding-top">
+    <ng-include src='"static/js/app/views/partials/header-menu.html"'></ng-include>
+    <div class="contentpanel" ng-init="initProfile()">
+        <div class="row ">
+            <div class="col-xs-12 panel no-margin">
+                <div class="profile-left-heading panel-body block-center">
+                    <ul class="panel-options">
+                        <li><a><i class="glyphicon glyphicon-option-vertical"></i></a></li>
+                    </ul>
+                    <a href="" class="profile-photo"><img class="img-circle img-responsive" src="http://wedesignthemes.com/html/role/images/post-images/profile-img4.jpg" alt=""></a>
+                    <h2 class="profile-name">{$user.username$}</h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-12  panel">
+                <div class="padding-10 panel-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-justified nav-line">
+                        <li class="active"><a href="#my-places" data-toggle="tab"><strong>My Places ({$ userPlaces.length $})</strong></a></li>
+                        <li><a href="#my-route" data-toggle="tab"><strong>My Route</strong></a></li>
+                        <li><a href="#favorite-place" data-toggle="tab"><strong>Favorite Places</strong></a></li>
+                        <li><a href="#trips" data-toggle="tab"><strong>Trips</strong></a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content container">
+                        <div class="tab-pane active" id="my-places">
+                            <a class="BoardCreateRep " href="#/add-place">
+                                <i></i>
+                                <span>Add place</span>
+                            </a>
+                            <div ng-repeat="place in userPlaces track by $index">
+                                <div class="col-md-4 col-xs-6 col-sm-5">
+                                    <place-post is-edit='true' place="place" remove="remove(place.id)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="my-route">
+                            <div class="form-group col-xs-12">
+                                <a href="#/add-route/" class="col-xs-offset-4 col-xs-5 btn btn-success btn-quirk btn-stroke ">Create route</a>
+                            </div>
+                            <div ng-repeat="route in routeList track by $index">
+                                <div class="col-xs-offset-1">
+                                    <route-miniature route="route" is-edit='true' remove="removeRoute(route.id)"></route-miniature>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="favorite-place">
+                            added
+                        </div>
+                        <div class="tab-pane" id="trips">
+                        <!-- TODO: change to real data -->
+                            <div class="table-responsive">
+                                <table class="table table-hover nomargin">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-right">Start date</th>
+                                            <th class="text-right">End date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Edinburgh</td>
+                                            <td class="text-center">61</td>
+                                            <td class="text-right">2011/04/25</td>
+                                            <td>
+                                                <ul class="table-options">
+                                                    <li><a href=""><i class="fa fa-trash"></i></a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- tab-pane -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+    <!-- contentpanel -->
+</div>

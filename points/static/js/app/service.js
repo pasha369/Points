@@ -14,11 +14,11 @@ app.factory('pointService', function($http) {
         },
 
         removePlace: function(placeId){
-        $http({
+        return $http({
                 method: 'POST',
                 url: 'api/points/remove/',
                 data: {place_id: placeId}
-            })
+            });
         },
 
         savePhoto: function(formData){
@@ -199,6 +199,14 @@ app.factory('routeService', function($http) {
                 url: 'api/points/route-detail/',
                 data: {routeId: routeId}
             })
+        },
+        
+        removeRoute: function(routeId){
+            return $http({
+                method:'POST',
+                url: 'api/points/remove-route/',
+                data: {routeId: routeId}
+            });
         },
 
         routeList: function(){
