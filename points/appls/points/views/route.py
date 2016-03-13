@@ -48,10 +48,12 @@ def get_route_detail(request):
     route_id = request.data['routeId']
     route_entity = Route.objects.get(pk=route_id)
     route_place_entity = RoutePlace.objects.filter(route__pk=route_id)
+    print route_place_entity[0].place.id
     places = []
     for route_place in route_place_entity:
-        photo = PlacePhoto.objects.filter(place=route_place.place)
-        place = {'id': route_place.place.pk,
+        if route_place.place is not None:
+            photo = PlacePhoto.objects.filter(place=route_place.place)
+            place = {'id':  route_place.place.id,
                                 'title': route_place.place.title,
                                 'description': route_place.place.description,
                                 'photo': photo[0].photo_url if photo.exists() else "",
@@ -78,3 +80,13 @@ def get_route_list(request):
                      'name': route.name,
                      'description': route.description})
     return JSONResponse({'routes': routes}, status=201)
+
+@csrf_exempt
+@api_view(['POST'])
+def remove_route(request):
+    """
+    Remove route by id.
+    """
+    route = Route.objects.get(pk=request.data['routeId'])
+    route.delete()
+    return JSONResponse({'route': route.id}, status=201)

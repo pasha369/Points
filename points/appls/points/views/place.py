@@ -78,6 +78,8 @@ def get_place_detail(request):
         'title': place.title,
         'description': place.description,
         'id': place.id,
+        'latitude': place.latitude,
+        'langtitude': place.langtitude,
         'category': place.category.name  if place.category is not None else "",
         'photo': photo[0].photo_url if photo.exists() else ""
     })

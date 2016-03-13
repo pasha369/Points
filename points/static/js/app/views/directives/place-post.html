@@ -1,10 +1,12 @@
-<div class="place-item">
-    <div class="be-post">
+<div class="place-item panel">
+    <ul class="panel-options top-0" ng-if="isEdit">
+        <li><a href="javascript:;" ng-click="remove({placeId: place.id})"><span class="fa fa-remove"></span></a> </li>
+    </ul>
+    <div class="be-post panel-body">
         <a href="#/detail/{$place.id$}" class="be-img-block">
             <img src="{$ place.photo $}" alt="omg">
         </a>
         <a href="#/detail/{$place.id$}" class="be-post-title">{$ place.title $}</a>
-
         <div class="author-post">
             <img src="img/a6.png" alt="" class="ava-author">
             <span>by <a href="page1.html">{$ place.user $}</a></span>

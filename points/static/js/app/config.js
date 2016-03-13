@@ -18,15 +18,15 @@ app.config(['$routeProvider',
             controller: 'pointCtrl'
         }).
         when('/profile', {
-            templateUrl: 'static/js/app/views/pages/profile.html',
+            templateUrl: 'static/js/app/views/pages/profile2.html',
             controller: 'pointCtrl'
         }).
         when('/profile/edit', {
             templateUrl: 'static/js/app/views/pages/profile-edit.html',
-            controller: 'pointCtrl'
+            controller: 'authController'
         }).
         when('/detail/:placeId', {
-            templateUrl: 'static/js/app/views/pages/place-detail.html',
+            templateUrl: 'static/js/app/views/pages/place-detail2.html',
             controller: 'pointCtrl'
         }).
         when('/add-place/', {
@@ -35,6 +35,10 @@ app.config(['$routeProvider',
         }).
         when('/add-route/', {
             templateUrl: 'static/js/app/views/pages/create-route.html',
+            controller: 'routeCtrl'
+        }).
+        when('/routes/', {
+            templateUrl: 'static/js/app/views/pages/route-list.html',
             controller: 'routeCtrl'
         }).
         when('/route-detail/:routeId', {
