@@ -29,7 +29,7 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" src="http://wedesignthemes.com/html/role/images/post-images/profile-img4.jpg" alt="">
+                            <img class="media-object img-circle" src="{$currentPlace.user_photo$}" alt="">
                         </a>
                     </div>
                     <div class="media-body">
@@ -56,12 +56,12 @@
                 <div class="list-group" ng-repeat="comment in comments track by $index">
                     <div class="list-group-item unread">
                         <div class="media">
-                            <div class="media-left">
-                                <img class="media-object img-circle" src="../images/photos/user1.png" alt="">
+                            <div class="col-xs-1">
+                                <img class="media-object img-circle img-responsive col-xs-12" src="{$comment.author_photo$}" alt="">
                             </div>
                             <div class="media-body">
                                 <span class="pull-right">1 hour ago</span>
-                                <h5 class="media-heading">{$comment.author.last_name$} {$comment.author.first_name$}</h5>
+                                <h5 class="media-heading">{$comment.author$}</h5>
                             </div>
                             <p>{$comment.text$}</p>
                         </div>

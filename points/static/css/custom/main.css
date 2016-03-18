@@ -287,3 +287,7 @@
 .place-miniature .place-min-detail h3 {
     color: white;
 }
+
+.be-post .be-img-block img {
+    height: 167px!important;
+}

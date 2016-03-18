@@ -12,13 +12,16 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <input type="text" name="firstName" placeholder="Enter first name..." class="form-control" ng-model="user.first_name"/>
+                                <input name="user-photo" type="file" id="user-photo" required/>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="lastName" placeholder="Enter last name..." class="form-control" ng-model="user.last_name"/>
+                                <input type="text" name="firstName" placeholder="Enter first name..." class="form-control" ng-model="user.first_name" />
                             </div>
                             <div class="form-group">
-                                <input type="text" name="address" placeholder="Enter address..." class="form-control" ng-model="user.address"/>
+                                <input type="text" name="lastName" placeholder="Enter last name..." class="form-control" ng-model="user.last_name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="address" placeholder="Enter address..." class="form-control" ng-model="user.address" />
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" name="about" rows="7" placeholder="Enter something about yourself..." ng-model="user.about"></textarea>

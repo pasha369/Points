@@ -350,7 +350,7 @@ app.controller('pointCtrl', function($scope, tripService, pointService, routeSer
     }
 })
 
-app.controller('authController', function($scope, authService) {
+app.controller('authController', function($scope, authService, pointService) {
     $scope.credentials = {};
     $scope.user = {};
     $scope.editableUser = {};
@@ -369,6 +369,14 @@ app.controller('authController', function($scope, authService) {
     }
 
     $scope.intiEdit = function() {
+        $("#user-photo").on("change", function() {
+            var formData = new FormData();
+            formData.append('photo', this.files[0]);
+            pointService.savePhoto(formData).then(function(response) {
+                $scope.user.photo_url = response.data.path;
+            });
+        });
+
         authService.getUser().then(function() {
             $scope.user = authService.user;
             if ($scope.user.id == null) {

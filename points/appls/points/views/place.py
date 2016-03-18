@@ -74,6 +74,9 @@ def get_place_detail(request):
     place = Place.objects.get(pk=id)
     photo = PlacePhoto.objects.filter(place=place)
     place_data = ({
+        'user_photo': (place.author.photo_url 
+                           if place.author.photo_url is not None 
+                           else ""),
         'user': place.author.user.username if place.author is not None else "",
         'title': place.title,
         'description': place.description,
@@ -200,6 +203,9 @@ def get_place_data(places):
     for place in places:
         photo = PlacePhoto.objects.filter(place=place)
         place_data.append({
+            'user_photo': (place.author.photo_url 
+                           if place.author.photo_url is not None 
+                           else ""),
             'user': place.author.user.username if place.author is not None else "",
             'title': place.title,
             'description': place.description,

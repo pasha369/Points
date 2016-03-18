@@ -89,6 +89,8 @@ def edit(request):
     user.last_name = user_data['last_name']
     user.address = user_data['address']
     user.about = user_data['about']
+    user.photo_url = user_data['photo_url']
+    print user.photo_url
     user.save()
     return JSONResponse({}, status=201)
 
@@ -110,6 +112,7 @@ def get_user_data(user):
     return {'id':user.id, 
             'username': user.username,
             'first_name': user_data.first_name,
+            'photo_url': user_data.photo_url,
             'last_name': user_data.last_name,
             'about': user_data.about,
             'address': user_data.address}

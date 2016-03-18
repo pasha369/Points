@@ -9,6 +9,7 @@ class BaseUser(models.Model):
     Extended model of standart user
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    photo_url = models.CharField(max_length=200, blank=True, default='')
     first_name = models.CharField(max_length=100, blank=True, default='')
     last_name = models.CharField(max_length=100, blank=True, default='')
     address = models.CharField(max_length=100, blank=True, default='')

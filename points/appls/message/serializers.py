@@ -11,11 +11,11 @@ class CommentSerializer(serializers.ModelSerializer):
     """
     text = serializers.CharField(required=True)
     author = serializers.ReadOnlyField(source='author.user.username')
-
+    author_photo = serializers.ReadOnlyField(source='author.photo_url')
     class Meta:
         """docstring for Meta"""
         model = Comment
-        fields = ('id', 'text', 'author', 'place')
+        fields = ('id', 'text', 'author', 'place', 'author_photo')
             
     def perform_serializer(self, serializer):
         author = BaseUser.objects.get(user = self.request.user.id)
