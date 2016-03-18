@@ -25,7 +25,7 @@ app.controller('mainCtrl', function($scope, $location, authService) {
     }
 });
 
-app.controller('pointCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll) {
+app.controller('pointCtrl', function($scope, tripService, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll) {
     $scope.isMain = true;
     $scope.places = [];
     $scope.routeList = [];
@@ -53,6 +53,23 @@ app.controller('pointCtrl', function($scope, pointService, routeService, message
     $scope.maxSize = 3;
     $scope.firstItemId = 1;
     $scope.lastItemId = 6;
+
+    $scope.initTripTable = function() {
+        tripService.getByUser().then(function(response) {
+            $scope.trips = response.data['trips'];
+        });
+    }
+
+    $scope.discardTrip = function(tripId) {
+        tripService.discard(tripId).then(function(response){
+            $.each($scope.trips, function(key, trip){
+                if(trip.tripId == tripId){
+                    $scope.trips.splice(key, 1);
+                }
+            })
+        });
+    }
+
     $scope.nextPage = function() {
         if ($scope.currentPage + 1 < ($scope.maxSize % $scope.numPerPage) && $scope.lastItemId < $scope.maxSize) {
             $scope.currentPage++;
@@ -343,8 +360,7 @@ app.controller('authController', function($scope, authService) {
     }
 });
 
-app.controller('dateModalCtrl', function($scope, $uibModal, $uibModalInstance) {
-
+app.controller('dateModalCtrl', function($routeParams, $scope, $uibModal, tripService,  $uibModalInstance) {
     $scope.inlineOptions = {
         customClass: getDayClass,
         minDate: new Date(),
@@ -398,12 +414,21 @@ app.controller('dateModalCtrl', function($scope, $uibModal, $uibModalInstance) {
     };
 
     $scope.go = function() {
-        $uibModalInstance.close({To: $scope.dtTo, From: $scope.dtFrom});
+        $uibModalInstance.close({ To: $scope.dtTo, From: $scope.dtFrom });
     };
 
+    $scope.initDateList = function () {
+        tripService.getTripDate($routeParams.routeId).then(function(response){
+            $scope.trips = response.data['trips'];
+        })
+    }
+
+    $scope.subscribeTrip = function(tripId){
+        tripService.subscribe(tripId);
+    }
 })
 
-app.controller('routeCtrl', function($scope, pointService, routeService, messageFactory, $routeParams, $location, $anchorScroll, $uibModal) {
+app.controller('routeCtrl', function($scope, pointService, routeService, tripService, messageFactory, $routeParams, $location, $anchorScroll, $uibModal) {
 
     var map;
     var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -430,16 +455,26 @@ app.controller('routeCtrl', function($scope, pointService, routeService, message
         });
     }
 
+    $scope.openDateList = function() {
+
+        var modalDateInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'static/js/app/views/templates/trip-datelist-modal.html',
+            controller: 'dateModalCtrl',
+        });
+
+    };
+
     $scope.open = function() {
 
         var modalDateInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'static/js/app/views/templates/tripDateModal.html',
+            templateUrl: 'static/js/app/views/templates/trip-date-modal.html',
             controller: 'dateModalCtrl',
         });
 
         modalDateInstance.result.then(function(date) {
-            console.log(date);
+            tripService.createTrip($routeParams.routeId, date.From, date.To);
         });
     };
 

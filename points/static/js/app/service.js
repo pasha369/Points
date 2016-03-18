@@ -13,19 +13,19 @@ app.factory('pointService', function($http) {
             })
         },
 
-        removePlace: function(placeId){
-        return $http({
+        removePlace: function(placeId) {
+            return $http({
                 method: 'POST',
                 url: 'api/points/remove/',
-                data: {place_id: placeId}
+                data: { place_id: placeId }
             });
         },
 
-        savePhoto: function(formData){
+        savePhoto: function(formData) {
             return $http({
-                method:'POST',
+                method: 'POST',
                 url: 'api/points/saveplacephoto/',
-                data:formData,
+                data: formData,
                 headers: {
                     'Content-Type': undefined
                 },
@@ -33,23 +33,23 @@ app.factory('pointService', function($http) {
             });
         },
 
-        placePage: function(page_id){
+        placePage: function(page_id) {
             return $http({
                 method: 'POST',
                 url: 'api/points/get_place_page/',
-                data: {page_id: page_id}
+                data: { page_id: page_id }
             })
         },
 
-        placeDetail: function(placeId){
+        placeDetail: function(placeId) {
             return $http({
                 method: 'POST',
                 url: 'api/points/place-detail/',
-                data: {place_id: placeId}
+                data: { place_id: placeId }
             })
         },
 
-        placeByUser: function(){
+        placeByUser: function() {
             return $http({
                 method: 'POST',
                 url: 'api/points/get-by-user/',
@@ -64,54 +64,54 @@ app.factory('pointService', function($http) {
             });
         },
 
-        placeLike: function(placeId){
+        placeLike: function(placeId) {
             $http({
                 method: 'POST',
                 url: 'api/points/place_like/',
-                data: {place: placeId}
+                data: { place: placeId }
             });
         },
 
-        likeCount: function(placeId){
+        likeCount: function(placeId) {
             return $http({
                 method: 'POST',
                 url: 'api/points/get_place_likes/',
-                data: {place_id: placeId}
+                data: { place_id: placeId }
             });
         },
 
-        search: function(text){
+        search: function(text) {
             return $http({
                 method: 'POST',
                 url: 'api/points/search/',
-                data: {search_text: text}
+                data: { search_text: text }
             })
         },
 
-        categoryList: function(){
+        categoryList: function() {
             return $http({
                 method: 'POST',
                 url: 'api/points/category-list/'
             });
         },
 
-        categoryPlaces: function(categoryId){
+        categoryPlaces: function(categoryId) {
             return $http({
                 method: 'POST',
                 url: 'api/points/category-places/',
-                data: {category_id: categoryId}
+                data: { category_id: categoryId }
             });
         },
 
-        follow: function(personId){
+        follow: function(personId) {
             return $http({
                 method: 'POST',
                 url: 'api/login/follow',
-                data: {person: personId}
+                data: { person: personId }
             });
         },
 
-        countryList: function(){
+        countryList: function() {
             return $http({
                 method: 'POST',
                 url: 'api/points/country-list/',
@@ -131,20 +131,20 @@ app.factory('authService', function($http, $location) {
                 url: 'api/login/sign_in',
                 data: credentials,
                 dataType: 'json',
-            }).then(function(response){
+            }).then(function(response) {
                 self.user = response.data['user'];
                 self.isAuth = true;
                 $location.path('/profile')
-                //toastr.success( self.user.first_name + " log in.");
+                    //toastr.success( self.user.first_name + " log in.");
             });
         },
 
-        register: function  (user) {
+        register: function(user) {
             $http({
                 method: 'POST',
                 url: 'api/login/sign_up',
-                data: {user: user},
-            }).then(function(response){
+                data: { user: user },
+            }).then(function(response) {
                 toastr.success("user register");
                 user = response.data['user'];
                 self.isAuth = true;
@@ -152,32 +152,32 @@ app.factory('authService', function($http, $location) {
             });
         },
 
-        getUser: function(){
+        getUser: function() {
             var self = this;
             return $http({
                 method: 'POST',
                 url: 'api/login/get-user',
-            }).then(function(response){
+            }).then(function(response) {
                 self.user = response.data['user'];
             })
         },
 
-        logout: function(){
+        logout: function() {
             var self = this;
             $http({
                 method: 'POST',
                 url: 'api/login/logout',
-            }).then(function(){
+            }).then(function() {
                 self.user = null;
                 $location.path('/login');
             })
         },
 
-        edit: function(editableUser){
-            return $http.post('api/login/edit', {user_data: editableUser});
+        edit: function(editableUser) {
+            return $http.post('api/login/edit', { user_data: editableUser });
         },
 
-        isAuthenticated: function(){
+        isAuthenticated: function() {
             // TODO: if not redirect to login
         }
     }
@@ -185,31 +185,31 @@ app.factory('authService', function($http, $location) {
 
 app.factory('routeService', function($http) {
     return {
-        saveRoute: function(route){
+        saveRoute: function(route) {
             $http({
                 method: 'POST',
                 url: 'api/points/save-route/',
-                data: {route: route}
+                data: { route: route }
             })
         },
 
-        routeDetail: function(routeId){
+        routeDetail: function(routeId) {
             return $http({
                 method: 'POST',
                 url: 'api/points/route-detail/',
-                data: {routeId: routeId}
+                data: { routeId: routeId }
             })
         },
-        
-        removeRoute: function(routeId){
+
+        removeRoute: function(routeId) {
             return $http({
-                method:'POST',
+                method: 'POST',
                 url: 'api/points/remove-route/',
-                data: {routeId: routeId}
+                data: { routeId: routeId }
             });
         },
 
-        routeList: function(){
+        routeList: function() {
             return $http({
                 method: 'POST',
                 url: 'api/points/route-list/',
@@ -218,21 +218,74 @@ app.factory('routeService', function($http) {
     }
 });
 
-
-app.factory('messageFactory', function($http){
+app.factory('tripService', function($http) {
     return {
-        addComment: function(comment){
+        createTrip: function(routeId, dateFrom, dateTo) {
+            $http({
+                method: 'POST',
+                url: 'api/points/add-trip/',
+                data: {
+                    routeId: routeId,
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                }
+            });
+        },
+
+        getByUser: function() {
+            return $http({
+                method: 'POST',
+                url: 'api/points/trip-by-user/',
+            });
+        },
+
+        getTripDate: function(tripId) {
+            return $http({
+                method: 'POST',
+                url: 'api/points/trip-date/',
+                data: {tripId: tripId}
+            });
+        },
+
+        getAll: function() {
+            return $http({
+                method: 'POST',
+                url: 'api/points/get-all/',
+            });
+        },
+
+        subscribe: function(tripId) {
+            $http({
+                method: 'POST',
+                url: 'api/points/subscribe-trip/',
+                data: { tripId: tripId }
+            });
+        },
+
+        discard: function(tripId) {
+            return $http({
+                method: 'POST',
+                url: 'api/points/discard-trip/',
+                data: { tripId: tripId }
+            });
+        },
+    }
+});
+
+app.factory('messageFactory', function($http) {
+    return {
+        addComment: function(comment) {
             $http({
                 method: 'POST',
                 url: 'api/message/add/',
-                data: {comment: comment}
+                data: { comment: comment }
             })
         },
-        getCommentByPlace: function(placeId){
+        getCommentByPlace: function(placeId) {
             return $http({
                 method: 'POST',
                 url: 'api/message/get_by_place/',
-                data: {place_id: placeId},
+                data: { place_id: placeId },
                 dataType: 'json'
             })
         }
