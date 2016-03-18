@@ -164,7 +164,7 @@ def save_place_photo(request):
                 # Check format of input image
         if pil_image.format not in ('GIF', 'JPEG', 'PNG'):
             raise Exception("Unsupport image type. Please upload bmp, png or jpeg")
-        pil_image.save(path)
+        pil_image.save(path) 
     return JSONResponse({'path': path}, status=201)
 
 

@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'points.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pointsDB',
+        'NAME': 'tpointsDB',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': 'localhost',

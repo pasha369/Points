@@ -46,7 +46,7 @@
                         <div class="tab-pane" id="favorite-place">
                             added
                         </div>
-                        <div class="tab-pane" id="trips">
+                        <div class="tab-pane" id="trips" ng-init="initTripTable()">
                         <!-- TODO: change to real data -->
                             <div class="table-responsive">
                                 <table class="table table-hover nomargin">
@@ -59,13 +59,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Edinburgh</td>
-                                            <td class="text-center">61</td>
-                                            <td class="text-right">2011/04/25</td>
+                                        <tr ng-repeat="trip in trips track by $index">
+                                            <td>{$trip.route$}</td>
+                                            <td class="text-center">{$trip.dateFrom$}</td>
+                                            <td class="text-right">{$trip.dateTo$}</td>
                                             <td>
                                                 <ul class="table-options">
-                                                    <li><a href=""><i class="fa fa-trash"></i></a></li>
+                                                    <li><a href="" ng-click="discardTrip(trip.tripId)"><i class="fa fa-trash"></i></a></li>
                                                 </ul>
                                             </td>
                                         </tr>
