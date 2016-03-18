@@ -80,6 +80,21 @@ app.factory('pointService', function($http) {
             });
         },
 
+        getFavorite: function() {
+            return $http({
+                method: 'POST',
+                url: 'api/points/get-favorite/'
+            });
+        },
+
+        removeFavorite: function(placeId) {
+            return $http({
+                method: 'POST',
+                url: 'api/points/remove-favorite/',
+                data: {placeId: placeId}
+            });
+        },
+
         search: function(text) {
             return $http({
                 method: 'POST',
@@ -275,11 +290,11 @@ app.factory('tripService', function($http) {
 app.factory('messageFactory', function($http) {
     return {
         addComment: function(comment) {
-            $http({
+            return $http({
                 method: 'POST',
                 url: 'api/message/add/',
                 data: { comment: comment }
-            })
+            });
         },
         getCommentByPlace: function(placeId) {
             return $http({

@@ -142,6 +142,29 @@ def place_like(request):
     Like.objects.create(place=place, user=user)
     return JSONResponse({}, status=201)
 
+@csrf_exempt
+@api_view(['POST'])
+def get_favorite_place(request):
+    """
+    Get user favorite place.
+    """
+    user = BaseUser.objects.get(user = request.user.id)
+    favorite = [x.place for x in Like.objects.filter(user=user)]
+    places = get_place_data(favorite)
+    return JSONResponse({'places': places}, status=201)
+
+@csrf_exempt
+@api_view(['POST'])
+def remove_favorite(request):
+    """
+    Remove place from favorite list.
+    """
+    placeId = request.data['placeId']
+    user = BaseUser.objects.get(user = request.user.id)
+    favorite_place = Like.objects.get(user=user, place__pk=placeId)
+    favorite_place.delete()
+    return JSONResponse({}, status=201)
+
 @api_view(['POST'])
 @csrf_exempt
 def get_place_likes(request):

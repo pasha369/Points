@@ -25,6 +25,10 @@ urlpatterns = [
         app_path+'place.place_like', name='place_like'),   
     url(r'^get_place_likes/$', 
         app_path+'place.get_place_likes', name='get_place_likes'),  
+    url(r'^get-favorite/$', 
+        app_path+'place.get_favorite_place', name='get_favorite_place'), 
+    url(r'^remove-favorite/$', 
+        app_path+'place.remove_favorite', name='remove_favorite'), 
     # category
     url(r'^category-list/$', 
         app_path+'category.categort_list', name='get_all'),        

@@ -268,17 +268,35 @@ app.controller('pointCtrl', function($scope, tripService, pointService, routeSer
         pointService.placeLike(placeId);
     }
 
+    $scope.getFavorite = function () {
+        pointService.getFavorite().then(function(response){
+            $scope.favoritePlaces = response.data['places'];
+        });
+    }
+
+    $scope.removeFavorite = function  (placeId) {
+        pointService.removeFavorite(placeId).then(function(response){
+            $.each($scope.favoritePlaces, function  (index, place) {
+                if(place.id == placeId){
+                    $scope.favoritePlaces.splice(index, 1);
+                }
+            })
+        })
+    }
+
     $scope.getLikeCount = function(placeId) {
         pointService.likeCount(placeId).then(function(response) {
             $scope.likeCount = response.data['like_count'];
         });
     }
 
-    $scope.add_comment = function(comment) {
-        messageFactory.addComment(comment);
+    $scope.addComment = function(comment) {
+        messageFactory.addComment(comment).then(function(response){
+            $scope.comments.push(response.data);
+        });
     }
 
-    $scope.get_comments = function() {
+    $scope.getComments = function() {
         var placeId = $routeParams.placeId;
         messageFactory.getCommentByPlace(placeId).then(function(responce) {
             $scope.comments = responce.data;
@@ -443,10 +461,6 @@ app.controller('routeCtrl', function($scope, pointService, routeService, tripSer
     $scope.currentPage = 1;
     $scope.maxSize = 5;
 
-
-
-
-    // TODO: Pretiffy this
     $scope.initRouteList = function() {
         routeService.routeList().then(function(response) {
             $scope.routes = response.data['routes']

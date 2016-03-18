@@ -40,7 +40,7 @@
                 <!-- media -->
                 <ul class="panel-options">
                     <li><a class="tooltips" href="" data-toggle="tooltip" title="" data-original-title="View Options"><i class="fa fa-hand-o-right"></i> follow</a></li>
-                    <li><a class="tooltips" href="" data-toggle="tooltip" title="" data-original-title="View Options"><i class="fa fa-plus "></i> add to favorite</a></li>
+                    <li><a class="tooltips" ng-click="placeLike(placeId)" href="javascript:;" data-toggle="tooltip" title="" data-original-title="View Options"><i class="fa fa-plus "></i> add to favorite</a></li>
                 </ul>
                 </ul>
             </div>
@@ -51,10 +51,28 @@
             </div>
         </div>
         <div class="row padding-top-10">
+
+            <div class="container" ng-init="getComments()">
+                <div class="list-group" ng-repeat="comment in comments track by $index">
+                    <div class="list-group-item unread">
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object img-circle" src="../images/photos/user1.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <span class="pull-right">1 hour ago</span>
+                                <h5 class="media-heading">{$comment.author.last_name$} {$comment.author.first_name$}</h5>
+                            </div>
+                            <p>{$comment.text$}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xs-6 col-xs-offset-3 ">
                 <div class="form-group  ">
-                    <input type="text" class="form-control" placeholder="Write some comments">
-                    <a href="javascript:;" class="margin-top-10 col-xs-offset-5 btn btn-success btn-quirk btn-stroke">COMMENT</a>
+                    <input type="text" ng-model="comment.text" class="form-control" placeholder="Write some comments">
+                    <a ng-click="addComment(comment)" href="javascript:;" class="margin-top-10 col-xs-offset-5 btn btn-success btn-quirk btn-stroke">COMMENT</a>
                 </div>
             </div>
         </div>

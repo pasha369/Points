@@ -43,8 +43,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="favorite-place">
-                            added
+                        <div class="tab-pane" id="favorite-place" ng-init="getFavorite()">
+                           <div ng-repeat="place in favoritePlaces track by $index">
+                                <div class="col-md-4 col-xs-6 col-sm-5">
+                                    <place-post is-edit='true' place="place" remove="removeFavorite(place.id)">
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="trips" ng-init="initTripTable()">
                         <!-- TODO: change to real data -->
