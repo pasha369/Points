@@ -11,13 +11,13 @@
                     <h2 class="profile-name">{$user.username$}</h2>
                 </div>
             </div>
-            <div class="col-xs-12 col-lg-12  panel">
+            <div class="col-xs-12 col-lg-12  panel cabinet">
                 <div class="padding-10 panel-body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs nav-justified nav-line">
                         <li class="active"><a href="#my-places" data-toggle="tab"><strong>My Places ({$ userPlaces.length $})</strong></a></li>
-                        <li><a href="#my-route" data-toggle="tab"><strong>My Route</strong></a></li>
-                        <li><a href="#favorite-place" data-toggle="tab"><strong>Favorite Places</strong></a></li>
+                        <li><a href="#my-route" data-toggle="tab"><strong>My Route ({$ routeList.length $})</strong></a></li>
+                        <li><a href="#favorite-place" data-toggle="tab"><strong>Favorite Places  ({$ favoritePlaces.length $})</strong></a></li>
                         <li><a href="#trips" data-toggle="tab"><strong>Trips</strong></a></li>
                     </ul>
                     <!-- Tab panes -->
@@ -57,8 +57,9 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">Name</th>
-                                            <th class="text-right">Start date</th>
-                                            <th class="text-right">End date</th>
+                                            <th class="text-center">Start date</th>
+                                            <th class="text-center">End date</th>
+                                            <th class="text-center">People number</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -66,7 +67,8 @@
                                         <tr ng-repeat="trip in trips track by $index">
                                             <td>{$trip.route$}</td>
                                             <td class="text-center">{$trip.dateFrom$}</td>
-                                            <td class="text-right">{$trip.dateTo$}</td>
+                                            <td class="text-center">{$trip.dateTo$}</td>
+                                            <td class="text-center">{$trip.peopleCount$}</td>
                                             <td>
                                                 <ul class="table-options">
                                                     <li><a href="" ng-click="discardTrip(trip.tripId)"><i class="fa fa-minus"></i></a></li>

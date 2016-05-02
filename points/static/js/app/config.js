@@ -45,6 +45,10 @@ app.config(['$routeProvider',
             templateUrl: 'static/js/app/views/pages/route-detail.html',
             controller: 'routeCtrl'
         }).
+        when('/trip-list/', {
+            templateUrl: 'static/js/app/views/pages/trip-list.html',
+            controller: 'pointCtrl'
+        }).
         otherwise({
             redirectTo: '/'
         });

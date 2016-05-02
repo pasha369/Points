@@ -291,3 +291,7 @@
 .be-post .be-img-block img {
     height: 167px!important;
 }
+
+.cabinet.panel{
+    min-height: 400px;
+}

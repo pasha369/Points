@@ -54,6 +54,16 @@ app.controller('pointCtrl', function($scope, tripService, pointService, routeSer
     $scope.firstItemId = 1;
     $scope.lastItemId = 6;
 
+    $scope.initMainTripTable = function() {
+        tripService.getAll().then(function(response) {
+            $scope.trips = response.data['trips'];
+        });
+    }
+
+    $scope.subscribeTrip = function(tripId){
+        tripService.subscribe(tripId);
+    }
+
     $scope.initTripTable = function() {
         tripService.getByUser().then(function(response) {
             $scope.trips = response.data['trips'];
@@ -630,7 +640,9 @@ app.controller('routeCtrl', function($scope, pointService, routeService, tripSer
     }
 
     $scope.saveRoute = function(route) {
-        routeService.saveRoute(route);
+        routeService.saveRoute(route).then(function(response){
+            $location.path('profile');
+        });
     }
 
     $scope.removeRoute = function(route) {

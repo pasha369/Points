@@ -86,9 +86,11 @@ def get_trip_date(request):
     trip_entities = TripFollower.objects.filter(trip__route__pk=request.data['tripId'])
     print request.data['tripId']
     for trip in trip_entities:
+        people_count = TripFollower.objects.filter(trip__pk=trip.trip.pk).count()
         trips.append({'tripId': trip.trip.pk,
-                     'dateFrom': trip.trip.date_from,
-                     'dateTo': trip.trip.date_to})
+                     'dateFrom': trip.trip.date_from.strftime('%Y-%m-%d'),
+                     'dateTo': trip.trip.date_to.strftime('%Y-%m-%d'),
+                     'peopleCount': people_count})
     return JSONResponse({'trips': trips}, status=201)
 
 def _subscribe(userId, trip):
@@ -106,8 +108,10 @@ def _convert_to_json(trip_entities):
     """
     trips = []
     for trip in trip_entities:
+        people_count = TripFollower.objects.filter(trip=trip).count()
         trips.append({'tripId': trip.pk,
                      'route': trip.route.name,
-                     'dateFrom': trip.date_from,
-                     'dateTo': trip.date_to})
+                     'dateFrom': trip.date_from.strftime('%Y-%m-%d'),
+                     'dateTo': trip.date_to.strftime('%Y-%m-%d'),
+                     'peopleCount': people_count})
     return trips

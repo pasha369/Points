@@ -7,30 +7,57 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12 padding-10">
-                                <!-- SEARCH -->
+                                <!-- SEARCH
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" ng-click="search(searchText)"><i class="fa fa-search"></i></button>
                                  </span>
                                 </div>
-                                <!-- END SEARCH -->
+                                END SEARCH -->
                             </div>
                         </div>
                         <div class="row">
                             <div class="panel">
                                 <div class="panel-body">
                                     <div class="row">
-                                      <!--  TODO: table -->
-                                    </div>
-                                    <div class="row">
-                                        <uib-pager total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pager>
+                                        <div class="tab-pane" id="trips" ng-init="initMainTripTable()">
+                                            <!-- TODO: change to real data -->
+                                            <div class="table-responsive">
+                                                <table class="table table-hover nomargin">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">Name</th>
+                                                            <th class="text-right">Start date</th>
+                                                            <th class="text-right">End date</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="trip in trips track by $index">
+                                                            <td>{$trip.route$}</td>
+                                                            <td class="text-center">{$trip.dateFrom$}</td>
+                                                            <td class="text-right">{$trip.dateTo$}</td>
+                                                            <td>
+                                                                <ul class="table-options">
+                                                                    <li><a href="" ng-click="subscribeTrip(trip.tripId)"><i class="fa fa-plus"></i></a></li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- tab-pane -->
                                     </div>
                                 </div>
+                                <!-- <div class="col-xs-12">
+                                    <uib-pager total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pager>
+                                </div> -->
                             </div>
                         </div>
-                        <div class="row">
-                        </div>
+                    </div>
+                    <div class="row">
                     </div>
                 </div>
             </div>

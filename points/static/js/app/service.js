@@ -201,11 +201,11 @@ app.factory('authService', function($http, $location) {
 app.factory('routeService', function($http) {
     return {
         saveRoute: function(route) {
-            $http({
+            return $http({
                 method: 'POST',
                 url: 'api/points/save-route/',
                 data: { route: route }
-            })
+            });
         },
 
         routeDetail: function(routeId) {

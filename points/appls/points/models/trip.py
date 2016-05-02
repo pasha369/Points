@@ -10,8 +10,8 @@ class Trip(models.Model):
     """
     route = models.ForeignKey(Route, blank=True, null=True, on_delete=models.SET_NULL)
     author = models.ForeignKey(BaseUser, blank=True, null=True, on_delete=models.SET_NULL)
-    date_from = models.DateTimeField(auto_now_add=True)
-    date_to = models.DateTimeField(auto_now_add=True)
+    date_from = models.DateTimeField(blank=True, null=True,)
+    date_to = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
 class TripFollower(models.Model):

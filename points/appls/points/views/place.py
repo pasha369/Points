@@ -185,13 +185,16 @@ def save_place_photo(request):
     Bind photo to place.
     """
     photo = request.FILES['photo']
-    path = 'media/' + photo.name
+    import os
+    from django.conf import settings
+    full_filename = os.path.join(settings.MEDIA_ROOT, photo.name)
+    #path = 'media/' + photo.name
     with Image.open(photo) as pil_image:
                 # Check format of input image
         if pil_image.format not in ('GIF', 'JPEG', 'PNG'):
             raise Exception("Unsupport image type. Please upload bmp, png or jpeg")
-        pil_image.save(path) 
-    return JSONResponse({'path': path}, status=201)
+        pil_image.save(full_filename) 
+    return JSONResponse({'path': 'media/'+ photo.name}, status=201)
 
 
 def get_place_data(places):
